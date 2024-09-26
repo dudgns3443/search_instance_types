@@ -72,6 +72,7 @@ def lambda_handler(event, context):
     elif path == '/searchHistory':
         # 검색 기록을 조회
         search_history = fetch_search_history()
+        # 검색 기록 데이터를 json으로 파싱작업
         body = []
         for row in search_history:
             tmp_dict  = {
