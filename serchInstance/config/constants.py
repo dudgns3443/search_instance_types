@@ -1,7 +1,7 @@
 class Constants:
     @property
     def BUCKET_NAME(self):
-        return "search.instancetype"
+        return 'YOUR_BUCKET_NAME'
     
     @property
     def DB_FILE_NAME(self):
