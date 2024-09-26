@@ -29,11 +29,8 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
     - name: Upload static files to S3
       run: |
-        pwd
-        ls
-        ls static
-        aws s3 sync ./static/index.html s3://search.instancetype/
-        aws s3 sync ./static/serchinstancetype.js s3://search.instancetype/
+        aws s3 cp ./static/index.html s3://search.instancetype/index.html
+        aws s3 cp ./static/serchinstancetype.js s3://search.instancetype/serchinstancetype.js
         
         
   deploy_core:
@@ -55,5 +52,5 @@ jobs:
       run: |
         zip ./serchInstance 
         ls
-        aws s3 sync serchInstance.zip s3://search.instancetype/serchInstance.zip
+        aws s3 cp serchInstance.zip s3://search.instancetype/serchInstance.zip
         aws lambda update-function-code --function-name ec2InstanceTypePriceChecker --s3-bucket ${{env.BUCKET_NAME}} --s3-key serchInstance.zip
