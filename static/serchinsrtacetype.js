@@ -1,7 +1,7 @@
 async function fetchRegions() {
     try {
         const response = await apiRequest('/getRegions');
-        const regions = await response.json().regions;
+        const regions = await response.regions;
         const selectBox = document.getElementById('region');
         
         // 셀렉트 박스 초기화
@@ -43,8 +43,8 @@ document.getElementById('searchBtn').addEventListener('click', async function ()
         "instanceType": instanceType
     }
     // Fetch the EC2 price (API or dummy data in this example)
-    const price = await apiRequest('/getPrice',"GET",body);
-
+    const response = await apiRequest('/getPrice',"POST",body);
+    price = response.price
     // Display result
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = ` ${instanceType} 타입의 ${region}지역 시간당 가격: $${price}`;
@@ -64,7 +64,12 @@ document.getElementById('historyBtn').addEventListener('click', async function (
 
     history.forEach(record => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${record.date}</td><td>${record.instanceType}</td><td>${record.region}</td><td>$${record.price}</td>`;
+        row.innerHTML = `
+            <td>${record.date}</td>
+            <td>${record.instanceType}</td>
+            <td>${record.region}</td>
+            <td>$${record.price}</td>
+        `;
         tbody.appendChild(row);
     });
 
@@ -80,7 +85,7 @@ async function saveSearchHistory(region, instanceType, price) {
         "price": price
     }
     return new Promise((resolve) => {
-        apiRequest('/savehistory','POST',body);
+        apiRequest('/saveHistory','POST',body);
         console.log(`Saving to DB: ${region}, ${instanceType}, $${price}`);
         resolve();
     });
@@ -90,13 +95,13 @@ async function saveSearchHistory(region, instanceType, price) {
 async function fetchSearchHistory() {
     return new Promise((resolve) => {
         const history = apiRequest('/searchHistory')
-        resolve(dummyHistory);
+        resolve(history);
     });
 }
 
 async function apiRequest(url, method = 'GET', body = null) {
     try {
-        const request_url = "http://111.111.0.0" + url
+        const request_url = "https://6xc4tvcdgut4qtb6onvbw3xhei0ahwro.lambda-url.ap-northeast-2.on.aws" + url
         const options = {
             method: method,
             headers: {

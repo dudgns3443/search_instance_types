@@ -1,7 +1,7 @@
 import sqlite3
 import boto3
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from config.constants import Constants
 
 s3_client = boto3.client('s3')
@@ -32,7 +32,9 @@ def save_search_history(instance_type, region, price):
     create_table()  # 테이블이 없으면 생성
     with sqlite3.connect(constants.LOCAL_DB_PATH) as conn:
         cursor = conn.cursor()
-        search_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
+        search_time = datetime.now() + timedelta(hours=9)
+        search_time = search_time.strftime('%Y-%m-%d %H:%M:%S')
         cursor.execute('''INSERT INTO search_history (instance_type, region, price, search_time)
                           VALUES (?, ?, ?, ?)''', (instance_type, region, price, search_time))
         conn.commit()
@@ -45,6 +47,8 @@ def fetch_search_history():
     with sqlite3.connect(constants.LOCAL_DB_PATH) as conn:
         cursor = conn.cursor()
         cursor.execute('''SELECT instance_type, region, price, search_time FROM search_history
-                          ORDER BY search_time DESC''')
+                          ORDER BY search_time DESC
+                          LIMIT 10''')
         results = cursor.fetchall()
+        
     return results
