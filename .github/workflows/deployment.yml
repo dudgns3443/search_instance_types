@@ -53,4 +53,4 @@ jobs:
         zip -r serchInstance.zip ./serchInstance
         ls
         aws s3 cp serchInstance.zip s3://search.instancetype/serchInstance.zip
-        aws lambda update-function-code --function-name ec2InstanceTypePriceChecker --s3-bucket ${{env.BUCKET_NAME}} --s3-key serchInstance.zip\n"
+        aws lambda update-function-code --function-name ec2InstanceTypePriceChecker --s3-bucket ${{env.BUCKET_NAME}} --s3-key serchInstance.zip
