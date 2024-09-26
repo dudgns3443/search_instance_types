@@ -29,7 +29,9 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
     - name: Upload static files to S3
       run: |
-        aws s3 sync ./static/* s3://search.instancetype/
+        aws s3 sync ./static/index.html s3://search.instancetype/
+        aws s3 sync ./static/serchinstancetype.js s3://search.instancetype/
+        
         
   deploy_core:
     name: Deploy to lambda
