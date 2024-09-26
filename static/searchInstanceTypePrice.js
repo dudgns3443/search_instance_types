@@ -35,29 +35,29 @@ document.getElementById('searchBtn').addEventListener('click', async function ()
     const instanceType = document.getElementById('instanceType').value;
 
     if (!instanceType) {
-        alert("Please enter an EC2 instance type.");
+        alert("EC2 인스턴스 타입을 입력하세요");
         return;
     }
     body = {
         "region": region,
         "instanceType": instanceType
     }
-    // Fetch the EC2 price (API or dummy data in this example)
+
     const response = await apiRequest('/getPrice',"POST",body);
     price = response.price
-    // Display result
+    // 가격 출력
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = ` ${instanceType} 타입의 ${region}지역 시간당 가격: $${price}`;
 
-    // Save the search to the database (server-side handling)
+    // 가격 출력 후  결과 저장 
     await saveSearchHistory(region, instanceType, price);
 });
 
 document.getElementById('historyBtn').addEventListener('click', async function () {
-    // Fetch the search history from the server
+    // 검색이력 조회
     const history = await fetchSearchHistory();
 
-    // Populate the history table
+    // 결과를 테이블로 변경
     const historyTable = document.getElementById('historyTable');
     const tbody = historyTable.querySelector('tbody');
     tbody.innerHTML = '';  // Clear any existing rows
@@ -76,8 +76,7 @@ document.getElementById('historyBtn').addEventListener('click', async function (
     historyTable.style.display = 'table';
 });
 
-
-// Dummy function to simulate saving search history to the database
+// 검색 이력 저장 함수
 async function saveSearchHistory(region, instanceType, price) {
     body = {
         "region": region,
@@ -91,14 +90,14 @@ async function saveSearchHistory(region, instanceType, price) {
     });
 }
 
-// Dummy function to simulate fetching search history from the database
+// 검색이력 조회 함수
 async function fetchSearchHistory() {
     return new Promise((resolve) => {
         const history = apiRequest('/searchHistory')
         resolve(history);
     });
 }
-
+// 공통 request 함수
 async function apiRequest(url, method = 'GET', body = null) {
     try {
         const request_url = "https://6xc4tvcdgut4qtb6onvbw3xhei0ahwro.lambda-url.ap-northeast-2.on.aws" + url

@@ -5,7 +5,6 @@ from service.search_price import get_ec2_instance_price
 
 
 def lambda_handler(event, context):
-    print("deploy check")
     headers = {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
