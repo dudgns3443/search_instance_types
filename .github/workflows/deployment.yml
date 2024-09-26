@@ -50,7 +50,7 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
     - name: Compress python code to zip
       run: | 
-        zip -r serchInstance.zip ./serchInstance/*
-        ls
+        cd serchInstance
+        zip -r serchInstance.zip ./*
         aws s3 cp serchInstance.zip s3://search.instancetype/serchInstance.zip
         aws lambda update-function-code --function-name ec2InstanceTypePriceChecker --s3-bucket ${{env.BUCKET_NAME}} --s3-key serchInstance.zip
