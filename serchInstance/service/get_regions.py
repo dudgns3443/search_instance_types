@@ -1,11 +1,15 @@
 import boto3
-import json
 
 def get_regions():
     # boto3를 사용하여 리전 목록 가져오기
-    ec2 = boto3.client('ec2')
-    response = ec2.describe_regions(AllRegions=False)
-    regions = response['Regions']
+    pricing_client = boto3.client('pricing', region_name='us-east-1')
 
-    # 리전 코드를 리스트로 반환
-    return [region['RegionName'] for region in regions]
+    # 리전 이름을 가져오기
+    response = pricing_client.get_attribute_values(
+        ServiceCode='AmazonEC2',
+        AttributeName='location'
+    )
+
+    # 리전 이름 리스트 추출
+    
+    return [item['Value'] for item in response['AttributeValues']]

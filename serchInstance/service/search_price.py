@@ -19,11 +19,12 @@ def get_ec2_instance_price(region, instance_type):
             ],
             MaxResults=1
         )
-
         # JSON으로 응답 파싱
-        product = json.loads(response['PriceList'][0])
-
+        if response['PriceList']:
+            product = json.loads(response['PriceList'][0])
+        else: return "해당 인스턴스가 존재하지 않습니다"
         # 가격 정보 추출
+
         price_dimensions = product['terms']['OnDemand']
         for _, term_data in price_dimensions.items():
             for _, price_dimension in term_data['priceDimensions'].items():

@@ -1,11 +1,7 @@
-BUCKET_NAME = 'your-s3-bucket'
-DB_FILE_NAME = 'mydatabase.db'
-LOCAL_DB_PATH = '/tmp/mydatabase.db'
-
 class Constants:
     @property
     def BUCKET_NAME(self):
-        return "your-api-key"
+        return "search.instancetype"
     
     @property
     def DB_FILE_NAME(self):
@@ -14,4 +10,3 @@ class Constants:
     @property
     def LOCAL_DB_PATH(self):
         return '/tmp/mydatabase.db'
-

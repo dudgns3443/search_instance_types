@@ -96,7 +96,7 @@ async function fetchSearchHistory() {
 
 async function apiRequest(url, method = 'GET', body = null) {
     try {
-        const request_url = 'http://0.0.0.0' + url
+        const request_url = "http://111.111.0.0" + url
         const options = {
             method: method,
             headers: {

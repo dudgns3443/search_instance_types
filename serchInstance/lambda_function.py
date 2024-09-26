@@ -33,7 +33,7 @@ def lambda_handler(event, context):
     if path == '/saveHistory':
         # 검색 기록을 저장
         body = json.loads(event['body'])
-        instance_type = body.get('instance_type')
+        instance_type = body.get('instanceType')
         region = body.get('region')
         price = body.get('price')
 
@@ -52,7 +52,7 @@ def lambda_handler(event, context):
             'body': json.dumps({'message': '검색이력 저장완료'})
         }
 
-    elif path == '/searchHistory
+    elif path == '/searchHistory':
         # 검색 기록을 조회
         search_history = fetch_search_history()
 
