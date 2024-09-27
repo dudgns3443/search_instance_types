@@ -31,3 +31,6 @@ cloudfront를 front에 두면 캐싱을 활용해 많은 리퀘스트를 적은 
 
 api gateway도 lambda를 호출하는 api를 커스텀하고( 메소드, 헤더, 등등) 제어하기 용이합니다.
 
+코드 작성시 present layer는 `lambda_function.py` 에서 작성하며
+service layer 는 `service/`
+persistent layer 는 `persistent/` 에 작성해서 분리하시길 권장합니다.
