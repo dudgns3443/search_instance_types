@@ -39,10 +39,10 @@ service layer 는 `service/`
 persistent layer 는 `persistent/` 에 작성해서 분리하시길 권장합니다.
 
 serchInstace/ 의 python 코드는 4개의 api로 구성됩니다.
-
+```
 /getRigion     // select box에 넣을 리전들을 가져오는 api 페이지로딩시 호출
 /getPrice      // 사용자가 리전과 인스턴스타입을 입력하면 가격을 가져와 보여줌
 /saveHistory   // 인스턴스별 가격 호출 뒤 검색이력 저장은 비동기적으로 진행됩니다 사용자는 검색시 가격을 빠르게 볼 수 있습니다.
 /searchHistory // 저장된 검색이력을 조회합니다.
-
+```
 
