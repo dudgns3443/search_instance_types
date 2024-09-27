@@ -18,3 +18,16 @@ static/ 디렉토리의 코드들은 화면단 코드로 S3로 배포되어 S3�
 serchInstance/ 디렉토리의 python 코드들은 lambda를 통해서 서비스됩니다. static/ 디렉토리와 같이 S3로 zip파일 형태로 배포되며 배포이후 lambda는 해당 zip파일로 코드를 최신화합니다.
 
 mydatabase.db 는 현재 empty 파일이며 위의 코드들이 배포되는 같은 s3로 배포되는 것을 추천합니다.
+
+아키텍처는 다음과 같습니다
+
+![제목 없는 다이어그램-페이지-9 drawio](https://github.com/user-attachments/assets/37d80f39-c126-4e5a-b8e4-acf3ea492eac)
+
+간단한 로직이라 serverless로 설계하였으며
+
+front 앞에 cloudfront를 두는 것과 lambda 앞에 apigateway를 두는 것을 best practice로 고려합니다.
+
+cloudfront를 front에 두면 캐싱을 활용해 많은 리퀘스트를 적은 돈과 빠른속도로 대응 가능합니다.
+
+api gateway도 lambda를 호출하는 api를 커스텀하고( 메소드, 헤더, 등등) 제어하기 용이합니다.
+
