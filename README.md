@@ -19,8 +19,11 @@ static/ 디렉토리의 코드들은 화면단 코드로 S3로 배포되어 S3�
 
 serchInstance/ 디렉토리의 python 코드들은 lambda를 통해서 서비스됩니다. static/ 디렉토리와 같이 S3로 zip파일 형태로 배포되며 배포이후 lambda는 해당 zip파일로 코드를 최신화합니다.
 
-
+config/constants.py 및 배포스크립트 .git/workflow/deployment.yaml에서  BUCKET_NAME 변수를 원하는 버킷이름으로 수정 하시길 바랍니다.
 mydatabase.db 는 현재 empty 파일이며 위의 코드들이 배포되는 같은 s3로 배포되는 것을 추천합니다.
+
+lambda는 서버리스 환경이어서 일회성 실행환경이라 자체서버 embedded DB를 만들 수 없어 db파일도 s3로 제공됩니다. python 로직이 수행되면 s3에서 db파일을 가져와 로컬의 /tmp/ 하위로 소속됩니다. 데이터 수정후 lambda가 s3에 db파일을 업데이트하여 최신화합니다 (여러 사용자가 동시에 사용할 경우 데이터 중복성 및 정합성을 기대하기 어렵습니다)
+
 
 아키텍처는 다음과 같습니다
 
